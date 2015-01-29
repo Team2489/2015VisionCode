@@ -14,9 +14,9 @@ using namespace cv;
 using namespace cv::gpu;
 
 int iLowH = 2;
-int iHighH = 157;
+int iHighH = 147;
 
-int iLowS = 149;
+int iLowS = 109;
 int iHighS = 255;
 
 int iLowV = 63;
@@ -28,8 +28,34 @@ Mat yellowFilter(const Mat& src)
     cvtColor(src, redOnly, COLOR_BGR2HSV);
     Mat imgThresholded;
     inRange(redOnly, Scalar(iLowH, iLowS, iLowV), Scalar(iHighH, iHighS, iHighV), imgThresholded);
+    erode(imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)) );
+    dilate( imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)) );
 
+    dilate( imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)) );
+    erode(imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)) );
 
+    blur(imgThresholded, imgThresholded, Size(3,3) );
+    cv::Canny(imgThresholded, imgThresholded, 100, 300, 3);
+
+    Moments oMoments = moments(imgThresholded);
+
+    double dM01 = oMoments.m01;
+    double dM10 = oMoments.m10;
+    double dArea = oMoments.m00;
+
+    int posX = 0;
+    int posY = 0;
+    // if the area <= 10000, I consider that the there are no object in the image and it's because of the noise, the area is not zero
+    if (dArea > 10000)
+    {
+    	//calculate the position of the ball
+    	posX = dM10 / dArea;
+    	posY = dM01 / dArea;
+    }
+
+    cout << "x: " << posX << " y: " << posY << endl;
+
+    cv::circle(imgThresholded, Point(posX, posY), 12, Scalar(255,255,255));
     return imgThresholded;
 }
 
