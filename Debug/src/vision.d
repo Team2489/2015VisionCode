@@ -175,4 +175,36 @@ src/vision.o : ../src/vision.cpp \
     /usr/include/opencv2/flann/defines.h \
     /usr/include/opencv2/flann/config.h \
     /usr/include/opencv2/highgui/highgui.hpp \
-    /usr/include/opencv2/highgui/highgui_c.h
+    /usr/include/opencv2/highgui/highgui_c.h \
+    /usr/include/libio.h \
+    /usr/include/_G_config.h \
+    /usr/include/arm-linux-gnueabihf/bits/sys_errlist.h \
+    /usr/include/libsocket/inetserverstream.hpp \
+    /usr/include/libsocket/inetbase.hpp \
+    /usr/include/libsocket/socket.hpp \
+    /usr/include/arm-linux-gnueabihf/sys/socket.h \
+    /usr/include/arm-linux-gnueabihf/sys/uio.h \
+    /usr/include/arm-linux-gnueabihf/bits/uio.h \
+    /usr/include/arm-linux-gnueabihf/bits/socket.h \
+    /usr/include/arm-linux-gnueabihf/bits/socket_type.h \
+    /usr/include/arm-linux-gnueabihf/bits/sockaddr.h \
+    /usr/include/arm-linux-gnueabihf/asm/socket.h \
+    /usr/include/asm-generic/socket.h \
+    /usr/include/arm-linux-gnueabihf/asm/sockios.h \
+    /usr/include/asm-generic/sockios.h \
+    /usr/include/errno.h \
+    /usr/include/arm-linux-gnueabihf/bits/errno.h \
+    /usr/include/linux/errno.h \
+    /usr/include/arm-linux-gnueabihf/asm/errno.h \
+    /usr/include/asm-generic/errno.h \
+    /usr/include/asm-generic/errno-base.h \
+    /usr/include/libsocket/exception.hpp \
+    /usr/include/libsocket/libinetsocket.h \
+    /usr/include/libsocket/inetclientstream.hpp \
+    /usr/include/libsocket/streamclient.hpp \
+    /usr/include/libsocket/select.hpp \
+    /usr/include/c++/4.6/list \
+    /usr/include/c++/4.6/bits/stl_list.h \
+    /usr/include/c++/4.6/bits/list.tcc \
+    /usr/include/c++/4.6/cstring \
+    /usr/include/arm-linux-gnueabihf/sys/time.h
