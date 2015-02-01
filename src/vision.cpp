@@ -10,21 +10,22 @@
 #include "opencv2/highgui/highgui.hpp"
 # include <string>
 # include <unistd.h>
-# include <stdio.h>
-# include <utility>
-# include <libsocket/inetserverstream.hpp>
-# include <libsocket/exception.hpp>
+#include <stdio.h>
+#include <utility>
+#include <ctime>
+#include <iostream>
+#include <string>
+#include "server.h"
 
-# include <libsocket/select.hpp>
-# include <libsocket/socket.hpp>
 
+pthread_mutex_t data_mutex;
 using namespace std;
 using namespace cv;
 using namespace cv::gpu;
 using std::string;
-using libsocket::inet_stream_server;
-using libsocket::inet_stream;
-using libsocket::selectset;
+
+TCPServer *myServer = 0;
+directions direc;
 
 int iLowH = 2;
 // Gray: 0
@@ -40,7 +41,10 @@ int iLowV = 63;
 
 int iHighV = 255;
 
-
+void htondirec(struct directions *d){
+    d->diterror = htonl(d->diterror);
+    d->status = htonl(d->status);
+}
 
 // Gets error
 
@@ -98,6 +102,29 @@ float filterAndGetError(const Mat& src) {
 	return distanceError(posX, imgThresholded);
 }
 
+void *NetFace(void*){
+    while(1){
+
+        if (myServer->ListenOnClient()) {
+            if (myServer->Receive()) {
+
+                pthread_mutex_lock(&data_mutex);
+                directions tmp = direc;
+                pthread_mutex_unlock(&data_mutex);
+
+                htondirec(&tmp);
+                myServer->Send(tmp);
+
+            }
+        }
+
+        if (myServer->ListenOnHost()) {
+            myServer->AcceptConnection();
+        }
+
+    }
+    return NULL;
+}
 
 int main()
 {
@@ -143,47 +170,28 @@ int main()
 //	cvDestroyWindow("Video");
 //	return 0;
 
-		string host = "::1";
-	    string port = "1235";
-	    string answ;
+	CvCapture* cv_cap = cvCaptureFromCAM(0);
+	IplImage* color_img;
+	myServer = new TCPServer();
+	myServer->InitiateSocket ( (char *) "1180" );
 
-	    try {
-		inet_stream_server srv(host,port,LIBSOCKET_IPv6);
-		inet_stream* cl1;
+	direc.diterror = 0;
+	direc.status = 0;
 
-		selectset<inet_stream_server> set1;
-		set1.add_fd(srv,LIBSOCKET_READ);
+	pthread_mutex_init(&data_mutex, NULL);
+	pthread_t netThread;
+	pthread_create(&netThread, NULL, NetFace, NULL);
 
-		for ( ;; )
-		{
-	    	std::cout << "asdj\n";
-
-		    /********* SELECT PART **********/
-		    libsocket::selectset<inet_stream_server>::ready_socks readypair; // Create pair (libsocket::fd_struct is the return type of selectset::wait()
-		    readypair = set1.wait(); // Wait for a connection and save the pair to the var
-		    inet_stream_server* ready_srv = dynamic_cast<inet_stream_server*>(readypair.first.back()); // Get the last fd of the LIBSOCKET_READ vector (.first) of the pair and cast the socket* to inet_stream_server*
-
-		    readypair.first.pop_back(); // delete the fd from the pair
-		    /*******************************/
-
-		    cl1 = ready_srv->accept();
-		    answ.resize(2000);
-
-		    while (answ.size() > 0) {
-		    	*cl1 >> answ;
-		    	std::cout << answ << std::endl;
-			    answ.resize(2000);
-		    }
+    while(1) {
+    	color_img = cvQueryFrame(cv_cap);
+    	Mat img(color_img);
+    	directions new_direc;
+    	new_direc.diterror = filterAndGetError(img);
+    	pthread_mutex_lock(&data_mutex); //Lock structure direc
+    	direc = new_direc;
+    	pthread_mutex_unlock(&data_mutex);
+    }
 
 
-		    cl1->destroy();
-		}
-
-		srv.destroy();
-
-	    } catch (const libsocket::socket_exception& exc)
-	    {
-		std::cerr << exc.mesg << std::endl;
-	    }
-	    return 0;
+	return 0;
 }

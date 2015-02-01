@@ -34,6 +34,7 @@
 							<tool id="nvcc.linker.base.172849823" name="NVCC Linker" superClass="nvcc.linker.base">
 								<option id="nvcc.linker.option.libs.1872352332" name="Libraries (-l)" superClass="nvcc.linker.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="opencv_highgui"/>
+									<listOptionValue builtIn="false" value="boost_system"/>
 									<listOptionValue builtIn="false" value="socket++"/>
 									<listOptionValue builtIn="false" value="opencv_gpu"/>
 									<listOptionValue builtIn="false" value="opencv_imgproc"/>
