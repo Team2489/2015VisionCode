@@ -24,8 +24,8 @@ using namespace cv;
 using namespace cv::gpu;
 using std::string;
 
-TCPServer *myServer = 0;
-directions direc;
+TCPServer *myServer = NULL;
+directions g_direc = {0};
 
 int iLowH = 2;
 // Gray: 0
@@ -102,14 +102,15 @@ float filterAndGetError(const Mat& src) {
 	return distanceError(posX, imgThresholded);
 }
 
-void *NetFace(void*){
+void *NetFace(void*)
+{
     while(1){
 
         if (myServer->ListenOnClient()) {
             if (myServer->Receive()) {
 
                 pthread_mutex_lock(&data_mutex);
-                directions tmp = direc;
+                directions tmp = g_direc;
                 pthread_mutex_unlock(&data_mutex);
 
                 htondirec(&tmp);
@@ -171,24 +172,28 @@ int main()
 //	return 0;
 
 	CvCapture* cv_cap = cvCaptureFromCAM(0);
-	IplImage* color_img;
+	IplImage* color_img = NULL;
 	myServer = new TCPServer();
 	myServer->InitiateSocket ( (char *) "1180" );
 
-	direc.diterror = 0;
-	direc.status = 0;
+	g_direc.diterror = 0;
+	g_direc.status = 2;
 
 	pthread_mutex_init(&data_mutex, NULL);
-	pthread_t netThread;
+	pthread_t netThread = 0;
+
 	pthread_create(&netThread, NULL, NetFace, NULL);
+
 
     while(1) {
     	color_img = cvQueryFrame(cv_cap);
     	Mat img(color_img);
-    	directions new_direc;
+    	directions new_direc = {0};
     	new_direc.diterror = filterAndGetError(img);
+
     	pthread_mutex_lock(&data_mutex); //Lock structure direc
-    	direc = new_direc;
+    	g_direc = new_direc;
+    	g_direc.status++;
     	pthread_mutex_unlock(&data_mutex);
     }
 
