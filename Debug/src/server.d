@@ -1,4 +1,4 @@
-src/vision.o : ../src/vision.cpp \
+src/server.o : ../src/server.cpp \
     /usr/include/c++/4.6/iostream \
     /usr/include/c++/4.6/arm-linux-gnueabihf/./bits/c++config.h \
     /usr/include/c++/4.6/arm-linux-gnueabihf/./bits/os_defines.h \
@@ -96,21 +96,11 @@ src/vision.o : ../src/vision.cpp \
     /usr/include/c++/4.6/bits/ostream.tcc \
     /usr/include/c++/4.6/istream \
     /usr/include/c++/4.6/bits/istream.tcc \
-    /usr/include/opencv2/gpu/gpu.hpp \
-    /usr/include/c++/4.6/vector \
-    /usr/include/c++/4.6/bits/stl_construct.h \
-    /usr/include/c++/4.6/bits/stl_uninitialized.h \
-    /usr/include/c++/4.6/bits/stl_vector.h \
-    /usr/include/c++/4.6/bits/stl_bvector.h \
-    /usr/include/c++/4.6/bits/vector.tcc \
-    /usr/include/c++/4.6/memory \
-    /usr/include/c++/4.6/bits/stl_tempbuf.h \
-    /usr/include/c++/4.6/bits/stl_raw_storage_iter.h \
-    /usr/include/c++/4.6/backward/auto_ptr.h \
-    /usr/include/opencv2/core/gpumat.hpp \
-    /usr/include/opencv2/core/core.hpp \
-    /usr/include/opencv2/core/types_c.h \
-    /usr/include/assert.h \
+    ../src/server.h \
+    /usr/include/libio.h \
+    /usr/include/_G_config.h \
+    /usr/include/arm-linux-gnueabihf/bits/stdio_lim.h \
+    /usr/include/arm-linux-gnueabihf/bits/sys_errlist.h \
     /usr/include/stdlib.h \
     /usr/include/arm-linux-gnueabihf/bits/waitflags.h \
     /usr/include/arm-linux-gnueabihf/bits/waitstatus.h \
@@ -121,72 +111,13 @@ src/vision.o : ../src/vision.cpp \
     /usr/include/arm-linux-gnueabihf/sys/sysmacros.h \
     /usr/include/alloca.h \
     /usr/include/arm-linux-gnueabihf/bits/stdlib-float.h \
-    /usr/include/string.h \
-    /usr/lib/gcc/arm-linux-gnueabihf/4.6/include/float.h \
-    /usr/lib/gcc/arm-linux-gnueabihf/4.6/include/stdint.h \
-    /usr/include/stdint.h \
-    /usr/include/math.h \
-    /usr/include/arm-linux-gnueabihf/bits/huge_val.h \
-    /usr/include/arm-linux-gnueabihf/bits/huge_valf.h \
-    /usr/include/arm-linux-gnueabihf/bits/huge_vall.h \
-    /usr/include/arm-linux-gnueabihf/bits/inf.h \
-    /usr/include/arm-linux-gnueabihf/bits/nan.h \
-    /usr/include/arm-linux-gnueabihf/bits/mathdef.h \
-    /usr/include/arm-linux-gnueabihf/bits/mathcalls.h \
-    /usr/include/opencv2/core/version.hpp \
-    /usr/lib/gcc/arm-linux-gnueabihf/4.6/include-fixed/limits.h \
-    /usr/lib/gcc/arm-linux-gnueabihf/4.6/include-fixed/syslimits.h \
-    /usr/include/limits.h \
-    /usr/include/arm-linux-gnueabihf/bits/posix1_lim.h \
-    /usr/include/arm-linux-gnueabihf/bits/local_lim.h \
-    /usr/include/linux/limits.h \
-    /usr/include/arm-linux-gnueabihf/bits/posix2_lim.h \
-    /usr/include/arm-linux-gnueabihf/bits/xopen_lim.h \
-    /usr/include/arm-linux-gnueabihf/bits/stdio_lim.h \
-    /usr/include/c++/4.6/algorithm \
-    /usr/include/c++/4.6/utility \
-    /usr/include/c++/4.6/bits/stl_relops.h \
-    /usr/include/c++/4.6/bits/stl_algo.h \
-    /usr/include/c++/4.6/cstdlib \
-    /usr/include/c++/4.6/bits/algorithmfwd.h \
-    /usr/include/c++/4.6/bits/stl_heap.h \
-    /usr/include/c++/4.6/cmath \
-    /usr/include/c++/4.6/cstddef \
-    /usr/include/c++/4.6/complex \
-    /usr/include/c++/4.6/sstream \
-    /usr/include/c++/4.6/bits/sstream.tcc \
-    /usr/include/c++/4.6/map \
-    /usr/include/c++/4.6/bits/stl_tree.h \
-    /usr/include/c++/4.6/bits/stl_map.h \
-    /usr/include/c++/4.6/bits/stl_multimap.h \
-    /usr/include/opencv2/core/operations.hpp \
-    /usr/include/c++/4.6/limits \
-    /usr/include/opencv2/core/mat.hpp \
-    /usr/include/opencv2/core/cuda_devptrs.hpp \
-    /usr/include/opencv2/imgproc/imgproc.hpp \
-    /usr/include/opencv2/imgproc/types_c.h \
-    /usr/include/opencv2/core/core_c.h \
-    /usr/include/opencv2/objdetect/objdetect.hpp \
-    /usr/include/c++/4.6/deque \
-    /usr/include/c++/4.6/bits/stl_deque.h \
-    /usr/include/c++/4.6/bits/deque.tcc \
-    /usr/include/opencv2/features2d/features2d.hpp \
-    /usr/include/opencv2/flann/miniflann.hpp \
-    /usr/include/opencv2/flann/defines.h \
-    /usr/include/opencv2/flann/config.h \
-    /usr/include/opencv2/highgui/highgui.hpp \
-    /usr/include/opencv2/highgui/highgui_c.h \
-    /usr/include/libio.h \
-    /usr/include/_G_config.h \
-    /usr/include/arm-linux-gnueabihf/bits/sys_errlist.h \
-    /usr/include/c++/4.6/ctime \
-    ../src/server.h \
     /usr/include/errno.h \
     /usr/include/arm-linux-gnueabihf/bits/errno.h \
     /usr/include/linux/errno.h \
     /usr/include/arm-linux-gnueabihf/asm/errno.h \
     /usr/include/asm-generic/errno.h \
     /usr/include/asm-generic/errno-base.h \
+    /usr/include/string.h \
     /usr/include/arm-linux-gnueabihf/sys/socket.h \
     /usr/include/arm-linux-gnueabihf/sys/uio.h \
     /usr/include/arm-linux-gnueabihf/bits/uio.h \
@@ -198,6 +129,8 @@ src/vision.o : ../src/vision.cpp \
     /usr/include/arm-linux-gnueabihf/asm/sockios.h \
     /usr/include/asm-generic/sockios.h \
     /usr/include/netinet/in.h \
+    /usr/lib/gcc/arm-linux-gnueabihf/4.6/include/stdint.h \
+    /usr/include/stdint.h \
     /usr/include/arm-linux-gnueabihf/bits/in.h \
     /usr/include/netdb.h \
     /usr/include/rpc/netdb.h \

@@ -4,12 +4,15 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../src/server.cpp \
 ../src/vision.cpp 
 
 OBJS += \
+./src/server.o \
 ./src/vision.o 
 
 CPP_DEPS += \
+./src/server.d \
 ./src/vision.d 
 
 
